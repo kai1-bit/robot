@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot name="robot" xmlns:xacro='http://www.ros.org/wiki/xacro'>
+<!-- the body of robot -->
+    <!-- 相当与函数的定义 为提升代码复用性 其中params相当于传参-->
+    <xacro:macro name="base_link" params='length radius'> 
+        <link name="base_link">
+            <!--描述-->
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="${radius}" length="${length}"/>
+                </geometry>
+                <material name = 'base'>
+                    <color rgba="1.0 1.0 1.0 0.5"/>
+                </material>
+            </visual>
+        </link>
+    </xacro:macro>
+    
+    <!-- 注意urdf规范 部件与关节名称唯一 -->
+    <!-- IMU_part -->
+    <xacro:macro name="IMU_link" params='IMU_name xyz'> 
+        <link name="${IMU_name}_link">
+            <!--描述-->
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <box size="0.02 0.02 0.02"/>
+                </geometry>
+                <material name = 'IMU'>
+                    <color rgba="0.0 0.0 0.0 0.5"/>
+                </material>
+            </visual>
+        </link>
+
+        <!-- 传感器与关节的一体性 -->
+        <!--joint-->
+        <joint name="${IMU_name}_joint" type="fixed">
+            <!-- 相对于基础部件的偏移 -->
+            <origin xyz="${xyz}" rpy="0.0 0.0 0.0"/>
+            <parent link="base_link"/>
+            <child link="${IMU_name}_link"/>
+        </joint>
+    </xacro:macro>
+
+    <!-- 注意调用正确性 -->
+    <xacro:base_link length='0.12' radius='0.1'/>
+    <xacro:IMU_link IMU_name='imu_up' xyz='0.0 0.0 0.03'/>
+    <xacro:IMU_link IMU_name='imu_down' xyz='0.0 0.0 -0.03'/>
+    
+</robot>

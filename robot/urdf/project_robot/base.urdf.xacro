@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro='http://www.ros.org/wiki/xacro'>
+    <!-- 引入宏文件 -->
+    <xacro:include filename='$(find robot)/urdf/project_robot/common_inertial.xacro'/>
+    <!-- /home/ros/project/project_ws/install/robot/share/robot/urdf/project_robot/common_inertia.xacro -->
+
+    <xacro:macro name="base_xacro" params='length radius'> 
+        <!-- 虚拟部件 不存在实际内容 -->
+        <!-- 记得在rviz2中改变坐标原点参照位置 -->
+        <link name="base_footprint"/>
+        <link name="base_link">
+            <!--描述-->
+            <visual>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="${radius}" length="${length}"/>
+                </geometry>
+                <material name = 'white'>
+                    <color rgba="1.0 1.0 1.0 0.5"/>
+                </material>
+            </visual>
+            <!-- 碰撞体积 -->
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+                <geometry>
+                    <cylinder radius="${radius}" length="${length}"/>
+                </geometry>
+                <material name = 'white'>
+                    <color rgba="1.0 1.0 1.0 0.5"/>
+                </material>
+            </collision>
+
+            <!-- 添加惯性矩阵 -->
+            <xacro:cylinder_inertia m='1.0' r='${radius}' h='${length}'/>
+        </link>
+
+        <!-- 关节 -->
+        <!-- 仅在z轴作投影 -->
+        <joint name="base_joint" type="fixed">
+            <origin xyz="0.0 0.0 ${length/2.0+0.032-0.001}" rpy="0.0 0.0 0.0"/>
+            <parent link="base_footprint"/>
+            <child link="base_link"/>
+        </joint>
+
+        <!-- gazebo标签 扩展以显现其他属性 -->
+        <gazebo reference='base_link'>
+            <material>Gazebo/Blue</material>
+        </gazebo>
+    </xacro:macro>
+</robot>
+<!-- 基础部件宏 -->

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot name="robot">
+    <!-- 身体部件 -->
+    <link name="base_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.0 0.0 0.0"/>
+            </geometry>
+            <material name="">
+                <color rgba="1.0 1.0 1.0 0.5"/>
+                <texture filename=""/>
+            </material>
+        </visual>
+    </link>
+    <!-- imu部件 -->
+    <link name="imu_link">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.02 0.02 0.02"/>
+            </geometry>
+            <material name="">
+                <color rgba="1.0 1.0 1.0 1.0"/>
+                <texture filename=""/>
+            </material>
+        </visual>
+    </link>
+    <!-- 关节 用于组合机器人部件 -->
+    <joint name="imu_joint" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="imu_link"/>
+    </joint>
+
+</robot>

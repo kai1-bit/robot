@@ -1,0 +1,10 @@
+image: room.pgm
+# 地图类型 三种像素代表三种状态：1 占用 2 自由 3 占用
+mode: trinary
+# 像素距离
+resolution: 0.05
+# 原点位置 要转化为象素距离再作偏移
+origin: [-9.65, -9.38, 0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25

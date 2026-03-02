@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro='http://www.ros.org/wiki/xacro'>
+    <!-- 引入宏文件 -->
+    <xacro:include filename='$(find robot)/urdf/project_robot/common_inertial.xacro'/>
+
+    <!-- 此处轮子要复用 为了遵守规范 传入名字参数 -->
+    <xacro:macro name='caster_xacro' params='caster_name xyz'> 
+        <link name="${caster_name}_link">
+            <!--描述-->
+            <visual>
+                <!-- 旋转以正确摆放轮子 -->
+                <origin xyz="0.0 0.0 0.0" rpy="1.57079 0.0 0.0"/>
+                <geometry>
+                        <sphere radius="0.016"/>
+                </geometry>
+                <material name = 'black'>
+                    <color rgba="0.0 0.0 0.0 0.8"/>
+                </material>
+            </visual>
+            <collision>
+                <origin xyz="0.0 0.0 0.0" rpy="1.57079 0.0 0.0"/>
+                <geometry>
+                        <sphere radius="0.016"/>
+                </geometry>
+                <material name = 'black'>
+                    <color rgba="0.0 0.0 0.0 0.8"/>
+                </material>
+            </collision>
+            <!-- 惯性质量 -->
+            <xacro:sphere_inertia m='0.05' r='0.016'/>
+        </link>
+
+        <!-- 关节 -->
+        <joint name="${caster_name}_joint" type="fixed">
+            <origin xyz="${xyz}" rpy="0.0 0.0 0.0"/>
+            <parent link="base_link"/>
+            <child link="${caster_name}_link"/>
+        </joint>
+
+        <!-- gazebo标签 扩展以显现其他属性 -->
+        <gazebo reference='${caster_name}_link'>
+            <material>Gazebo/White</material>
+            <!-- 切向摩擦系数 -->
+            <mu1 value='0.0'/>
+            <!-- 把向摩擦系数 -->
+            <mu2 value='0.0'/>
+            <!-- 接触刚度系数 -->
+            <kp value='1000000000.0'/>
+            <!-- 阻尼系数 -->
+            <kd value='1.0'/>
+        </gazebo>
+
+    </xacro:macro>  
+</robot>
+<!-- 外部轮部件宏 -->
