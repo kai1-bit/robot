@@ -10,7 +10,7 @@
             <visual>
                 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
                 <geometry>
-                        <cylinder radius="0.01" length="0.10"/>
+                        <cylinder radius="0.01" length="0.06"/>
                 </geometry>
                 <material name = 'black'>
                     <color rgba="0.0 0.0 0.0 0.10"/>
@@ -19,7 +19,7 @@
             <collision>
                 <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
                 <geometry>
-                        <cylinder radius="0.01" length="0.10"/>
+                        <cylinder radius="0.01" length="0.06"/>
                 </geometry>
                 <material name = 'black'>
                     <color rgba="0.0 0.0 0.0 0.10"/>
@@ -56,7 +56,7 @@
 
         <joint name="laser_joint" type="fixed">
             <!-- 计算雷达杆几何中心 将雷达固定到雷达杆上 -->
-            <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.0 0.0 0.03" rpy="0.0 0.0 0.0"/>
             <parent link="laser_cylinder_link"/>
             <child link="laser_link"/>
         </joint>
